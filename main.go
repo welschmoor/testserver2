@@ -23,6 +23,10 @@ func printPath(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, r.URL.Path)
 }
 
+func faq(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, "<h1 style={{backgroundColor: \"green\"}}>FAQ Page</h1><h2>Select a Question:</h2><select><option>kek</option><option>bur</option></select>")
+}
+
 type Router struct{}
 
 func (router Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -33,6 +37,8 @@ func (router Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		about(w, r)
 	case "/path":
 		printPath(w, r)
+	case "/faq":
+		faq(w, r)
 	default:
 		http.Error(w, "Page not found", http.StatusNotFound)
 	}
