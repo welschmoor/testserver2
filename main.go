@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -9,18 +10,24 @@ import (
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path == "/" {
-		w.Header().Set("Content-Type", "text/html")
-		fmt.Fprint(w, "<h1>Hello</h1>")
-	} else {
-		http.Error(w, "Page not found", http.StatusNotFound)
+
+	w.Header().Set("Content-Type", "text/html")
+	tpl, err := template.ParseFiles("./templates/home.html")
+
+	if err != nil {
+		panic(err)
+	}
+
+	err = tpl.Execute(w, nil)
+	if err != nil {
+		panic(err)
 	}
 }
 
 func about(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprint(w, `
-	<h1>Contact Page</h1>
+	<h1>Contact Page</h1> 
 	<a href="/">home</a>
 	`+"hello")
 }
