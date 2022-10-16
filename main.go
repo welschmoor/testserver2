@@ -23,23 +23,23 @@ func main() {
 	router := chi.NewRouter()
 	router.Use(middleware.Logger)
 
-	tpl, err := views.ParseTemplateFS(templates.FS, "home")
-	if err != nil { 
-		panic(err) 
+	tpl, err := views.ParseTemplateFS(templates.FS, "home.html", "navbar.html", "tailwind.html")
+	if err != nil {
+		panic(err)
 	}
 	router.Get("/", controllers.StaticHandler(tpl))
 
-	tpl, err = views.ParseTemplateFS(templates.FS, "about")
+	tpl, err = views.ParseTemplateFS(templates.FS, "about.html", "navbar.html", "tailwind.html")
 	if err != nil {
 		panic(err)
 	}
 	router.Get("/about", controllers.StaticHandler(tpl))
 
-	tpl, err = views.ParseTemplateFS(templates.FS, "faq")
+	tpl, err = views.ParseTemplateFS(templates.FS, "faq.html", "navbar.html", "tailwind.html")
 	if err != nil {
 		panic(err)
 	}
-	router.Get("/faq", controllers.StaticHandler(tpl))
+	router.Get("/faq", controllers.FAQ(tpl))
 
 	router.NotFound(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "404 not found", http.StatusNotFound)
