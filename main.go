@@ -7,6 +7,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/welschmoor/testserver2/controllers"
+	"github.com/welschmoor/testserver2/templates"
 	"github.com/welschmoor/testserver2/views"
 )
 
@@ -22,19 +23,19 @@ func main() {
 	router := chi.NewRouter()
 	router.Use(middleware.Logger)
 
-	tpl, err := views.ParseTemplate("home")
-	if err != nil {
-		panic(err)
+	tpl, err := views.ParseTemplateFS(templates.FS, "home")
+	if err != nil { 
+		panic(err) 
 	}
 	router.Get("/", controllers.StaticHandler(tpl))
 
-	tpl, err = views.ParseTemplate("about")
+	tpl, err = views.ParseTemplateFS(templates.FS, "about")
 	if err != nil {
 		panic(err)
 	}
 	router.Get("/about", controllers.StaticHandler(tpl))
 
-	tpl, err = views.ParseTemplate("faq")
+	tpl, err = views.ParseTemplateFS(templates.FS, "faq")
 	if err != nil {
 		panic(err)
 	}
