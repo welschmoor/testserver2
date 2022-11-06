@@ -1,0 +1,21 @@
+{{template "header" .}}
+{{template "navbar" .}}
+<main class="py-4 px-4">
+
+  <h1 class="">Sign Up!</h1>
+
+  <form action="/user" method="post">
+    <label> 
+      email  
+      <input name="email" class="border-2" required type="email" autocomplete="email" />
+    </label>
+    <label>
+      password  
+      <input name="password" class="border-2" type="password" required />
+    </label>
+    <button type="submit" class="border-2 w-20 bg-blue-500 text-white">Submit</button>
+
+
+  </form>
+</main>
+  {{template "footer"}}
