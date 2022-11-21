@@ -3,20 +3,18 @@ package controllers
 import (
 	"html/template"
 	"net/http"
-
-	"github.com/welschmoor/testserver2/views"
 )
 
-func StaticHandler(tpl views.Template) http.HandlerFunc {
+func StaticHandler(tpl Template) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		tpl.ExecuteTemplate(w, nil)
 	}
 }
 
-func FAQ(tpl views.Template) http.HandlerFunc {
+func FAQ(tpl Template) http.HandlerFunc {
 	questions := []struct {
 		Question string
-		Answer   template.HTML	//dangerous. This allows HTML. If users write it, dangerous
+		Answer   template.HTML //dangerous. This allows HTML. If users write it, dangerous
 	}{
 		{
 			Question: "You like?",
