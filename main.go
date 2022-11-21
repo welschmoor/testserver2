@@ -41,11 +41,18 @@ func main() {
 	}
 	router.Get("/faq", controllers.FAQ(tpl))
 
-	tpl, err = views.ParseTemplateFS(templates.FS, "signup.html", "navbar.html", "tailwind.html")
+	// tpl, err = views.ParseTemplateFS(templates.FS, "signup.html", "navbar.html", "tailwind.html")
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// router.Get("/signup", controllers.StaticHandler(tpl))
+
+	usersC := controllers.Users{}
+	usersC.Templates.New, err = views.ParseTemplateFS(templates.FS, "signup.html", "navbar.html", "tailwind.html")
 	if err != nil {
 		panic(err)
 	}
-	router.Get("/signup", controllers.FAQ(tpl))
+	router.Get("/signup", usersC.New)
 
 	router.NotFound(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "404 not found", http.StatusNotFound)
