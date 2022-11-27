@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 )
 
@@ -11,19 +12,25 @@ type Users struct {
 }
 
 func (u Users) New(w http.ResponseWriter, r *http.Request) {
-	u.Templates.New.ExecuteTemplate(w, nil)
-	// tpl, err := views.ParseTemplateFS(templates.FS, "signup.html", "navbar.html", "tailwind.html")
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// tpl.Execute(w, nil)
-	// // tpl2 := StaticHandler(tpl)
-	// // tpl2.Execute(w, nil)
+	var data struct {
+		Email string
+	}
+	data.Email = r.FormValue("email")
+	fmt.Println("data.Email", data.Email)
+	u.Templates.New.ExecuteTemplate(w, data)
 }
 
-// 	tpl, err := views.ParseTemplateFS(templates.FS, "signup.html", "navbar.html", "tailwind.html")
-// 	if err != nil {
-// 		fmt.Print("shoot")
-// 	}
-// 	tpl.Execute(w, nil)
-// }
+func (u Users) Create(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(w, "Form submitted")
+	fmt.Fprintln(w, " ")
+
+	err := r.ParseForm()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		panic(err)
+	}
+
+	fmt.Fprint(w, "Email: ", r.FormValue("email")) //oder  r.PostForm.Get("email")
+	fmt.Fprintln(w, " ")
+	fmt.Fprint(w, "password: ", r.FormValue("password"))
+}

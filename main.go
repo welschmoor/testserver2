@@ -53,6 +53,7 @@ func main() {
 		panic(err)
 	}
 	router.Get("/signup", usersC.New)
+	router.Post("/users", usersC.Create)
 
 	router.NotFound(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "404 not found", http.StatusNotFound)
